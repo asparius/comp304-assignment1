@@ -14,7 +14,8 @@ int main(int argc, char *argv[]){
 	char *args[] = {name_of_exe, "1","first",ori_sentence,NULL};
 	int status;
 	pid_t value;
-	char *child_num;
+	char child_num[100];
+	printf("Parent playing Chinese whisper %d processes\n", num_of_children);
 	for(int i = 0; i < num_of_children;i++){
 	
 		value = fork();	
@@ -23,7 +24,7 @@ int main(int argc, char *argv[]){
 			
 				
 			if(i == 0){
-				printf("Am I ever in iter %d\n",i);
+				
 				execv(name_of_exe,args);	
 				
 				return 1;
@@ -32,13 +33,13 @@ int main(int argc, char *argv[]){
 			
 				}
 			if( i > 0 && i < num_of_children -1){
-				printf("Am I ever in iter %d\n",i);	
-				printf("Why I am not in here");
-				sprintf(child_num,"%d",i);
-				printf("child num : %s\n",child_num);
+				
+				
+				sprintf(child_num,"%d",i + 1);
 				args[1] = child_num;
+				
 				args[2] = "other";
-				printf("What is the problem?\n");	
+				
 				execv(name_of_exe,args);
 				
 				return 1;
@@ -51,8 +52,9 @@ int main(int argc, char *argv[]){
 			if( i ==  num_of_children -1){
 			
 				
-				sprintf(child_num,"%d",i);
+				sprintf(child_num,"%d",i + 1);
 				args[1] = child_num;
+
 				args[2] = "last";
 
 				if(execv(name_of_exe,args) == -1){
@@ -66,19 +68,23 @@ int main(int argc, char *argv[]){
 			
 			
 		
-			}		
+			}
+				
+		else{
+			wait(NULL);
 		
+		}
 		}
 
 	
-	
+	/*
 	for(int i = 0; i < num_of_children;i++)
 		value = wait(&status);
 		if(value == -1){
 			perror("wait() failed");
 		
 		}
-
+	*/
 	printf("Parent terminating...\n");
 
 

@@ -31,9 +31,11 @@ int main(int argc, char * argv[]){
 		char buffer[SIZE];
 		strcpy(buffer,ori_sentence);
 		size_t buffer_size = strlen(buffer);
+		
 		srand(time(0));
-		int n1 = rand() % buffer_size;
-		int n2 = rand() % buffer_size;
+		
+		int n1 = (rand() + getpid()) % buffer_size;
+		int n2 = (rand()+ getpid()) % buffer_size;
 		char tmp = buffer[n1];
 		buffer[n1] = buffer[n2];
 		buffer[n2] = tmp;
@@ -45,6 +47,13 @@ int main(int argc, char * argv[]){
 	}
 
 	if(strcmp(order,"last") == 0){
+	
+	
+	
+	
+	
+	
+	
 	
 		shm_fd = shm_open(name,O_RDONLY, 0666);
 		if(shm_fd == -1){
@@ -85,9 +94,9 @@ int main(int argc, char * argv[]){
 		char buffer[SIZE];
 		strcpy(buffer,heard_sentence);
 		size_t buffer_size = strlen(buffer);
-		srand(time(NULL));
-		int n1 = rand() % buffer_size;
-		int n2 = rand() % buffer_size;
+		srand(time(0));
+		int n1 = (rand() + getpid()) % buffer_size;
+		int n2 = (rand() + getpid()) % buffer_size;
 		char tmp = buffer[n1];
 		buffer[n1] = buffer[n2];
 		buffer[n2] = tmp;
